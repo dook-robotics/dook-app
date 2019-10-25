@@ -5,9 +5,15 @@ This app is built using react-native in combination with Expo.
 do the following if you wanna open up the app
 
 Assuming that you have Node 10 LTS or greater installed, you can use npm to install the Expo CLI command line utility: <br/>
-`npm install -g expo-cli` <br/>
+
+`git clone https://github.com/dook-robotics/dook-app.git` <br/>
+
 
 `cd DookApp` <br/>
+
+`npm install` <br/>
+
+`npm install -g expo-cli` <br/>
 
 `expo-cli start` <br/>
 
