@@ -16,52 +16,36 @@ ORGANIZATION:
 import React from 'react';
 import { AppLoading } from 'expo';
 import { Container, Text, Footer } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, View, Alert } from 'react-native';
+// below was old one
+//import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, Platform, Image, View } from 'react-native'
+
+//import the different screens
 import LogIn from './app/LogIn';
 import Loading from './app/Loading';
 import Main from './app/Main';
 import SignUp from './app/SignUp';
-import { SwitchNavigator } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
+import * as firebase from 'firebase';
+import {firebaseConfig} from './Config';
 
+firebase.initializeApp(firebaseConfig);
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isReady: false,
-    };
-  }
-
-  async componentDidMount() {
-    await Font.loadAsync({
-      Roboto: require('native-base/Fonts/Roboto.ttf'),
-      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      ...Ionicons.font,
-    });
-    this.setState({ isReady: true });
-  }
-
-  render() {
-    if (!this.state.isReady) {
-      return <AppLoading />;
-    }
-
-    return (
-      <Container style = {styles.container}>
-        <LogIn/>
-      </Container>
-    );
-  }
-}
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+// create our app's navigation stack
+const RootStack = createSwitchNavigator(
+  {
+    Loading: Loading,
+    SignUp: SignUp,
+    LogIn: LogIn,
+    Main: Main
   },
-});
+  {
+    initialRouteName: 'Loading'
+  }
+)
+
+
+const App = createAppContainer(RootStack);
+
+
+export default App;

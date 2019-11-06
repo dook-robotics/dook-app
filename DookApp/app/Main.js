@@ -17,10 +17,28 @@ PURPOSE:
 */
 // Main.js
 import React from 'react'
-import { StyleSheet, Platform, Image, Text, View } from 'react-native'
+import { StyleSheet, Platform, Image, View } from 'react-native'
+import { Container, Header, Content, Button, Text } from 'native-base';
+import * as firebase from 'firebase';
+
 
 export default class Main extends React.Component {
   state = { currentUser: null }
+
+  componentDidMount() {
+    const { currentUser } = firebase.auth()
+
+    this.setState({ currentUser })
+  }
+
+
+  signOutUser = () => {
+    firebase.auth().signOut().then(function (user){
+    }).catch(function(error) {
+      console.log(error)
+    });
+  }
+
 render() {
     const { currentUser } = this.state
 return (
@@ -28,6 +46,9 @@ return (
         <Text>
           Hi {currentUser && currentUser.email}!
         </Text>
+        <Button onPress={() => this.signOutUser()}>
+          <Text> Sign Out </Text>
+        </Button>
       </View>
     )
   }

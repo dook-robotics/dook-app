@@ -15,36 +15,58 @@ ORGANIZATION:
 PURPOSE:
   a Login screen where an existing user can login or choose to sign up
 */
-// App.js
+// Login.js
 import React from 'react';
 import { AppLoading } from 'expo';
 import { Container, Text, Footer, Button, Form, Item, Input,Content, Label } from 'native-base';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View, Alert } from 'react-native';
-import Config from '../Config.js'
+import {firebaseConfig} from '../Config';
+import * as firebase from 'firebase';
 
 
-export default class App extends React.Component {
+
+export default class LogIn extends React.Component {
+  constructor(props) {
+      super(props)
+
+      this.state=({
+        email: '',
+        password: ''
+      })
+  }
+
+
+
+  loginUser = (email, password) => {
+    try {
+      firebase.auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) =>this.props.navigation.navigate('Main'))
+    }
+    catch(error) {
+      console.log(error.toString())
+    }
+  }
+
 
   render() {
     return (
-      <Container style = {styles.container}>
-        <Text> DOOK </Text>
+      <Container style = {styles.sContainer}>
+        <Text> Welcome to the DOOK app! Please log in :) </Text>
         <Form style = {styles.usr}>
           <Item stackedLabel >
-            <Label >Username</Label>
-            <Input />
+            <Label >E-mail</Label>
+            <Input autocorrect={false}  onChangeText={(email) => this.setState({ email })}/>
           </Item>
           <Item stackedLabel last>
             <Label>Password</Label>
-            <Input />
+            <Input secureTextEntry={true} onChangeText={(password) => this.setState({ password })}/>
           </Item>
         </Form>
-        <Button block success style={styles.btn}>
+        <Button block success style={styles.btn} onPress={() => this.loginUser(this.state.email, this.state.password)}>
           <Text>Log In</Text>
         </Button>
-        <Button bordered success style={styles.btn}>
+        <Button bordered success style={styles.btn} onPress={() => this.props.navigation.navigate('SignUp')}>
           <Text> Need an account? Sign Up </Text>
         </Button>
       </Container>
@@ -54,6 +76,12 @@ export default class App extends React.Component {
 
 
 const styles = StyleSheet.create({
+  sContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     width: '80%',
@@ -69,4 +97,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
   },
+  txtCtr: {
+    alignItems: 'center',
+  }
 });

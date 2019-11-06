@@ -17,10 +17,18 @@ PURPOSE:
 */
 // Loading.js
 import React from 'react';
-import firebase from 'react-native-firebase';
+import * as firebase from 'firebase';
+import {firebaseConfig} from '../Config';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 
+
 export default class Loading extends React.Component {
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      this.props.navigation.navigate(user ? 'Main' : 'LogIn')
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
