@@ -1,44 +1,62 @@
 /*
 AUTHORS:
-   Mikian Musser      - https://github.com/mm909
-   Eric Becerril-Blas - https://github.com/lordbecerril
-   Zoyla Orellana     - https://github.com/ZoylaO
-   Austin Janushan    - https://github.com/Janushan-Austin
-   Giovanny Vazquez   - https://github.com/giovannyVazquez
-   Ameera Essaqi      - https://github.com/AmeeraE
-   Brandon Herrera    - herrer10@unlv.nevada.edu
-   Esdras Morales     - morale2@unlv.nevada.edu
+  Mikian Musser      - https://github.com/mm909
+  Eric Becerril-Blas - https://github.com/lordbecerril
+  Zoyla Orellana     - https://github.com/ZoylaO
+  Austin Janushan    - https://github.com/Janushan-Austin
+  Giovanny Vazquez   - https://github.com/giovannyVazquez
+  Ameera Essaqi      - https://github.com/AmeeraE
+  Brandon Herrera    - herrer10@unlv.nevada.edu
+  Esdras Morales     - morale2@unlv.nevada.edu
 
 ORGANIZATION:
-   Dook Robotics - https://github.com/dook-robotics
+  Dook Robotics - https://github.com/dook-robotics
+
+PURPOSE:
+  a Main screen of our application that we only show to an authenticated user.
 */
-// app/Main.js
-// after all imports
-//<Header title={headerTitle} />
+// Main.js
+import React from 'react'
+import { StyleSheet, Platform, Image, View } from 'react-native'
+import { Container, Header, Content, Button, Text } from 'native-base';
+import * as firebase from 'firebase';
 
-import React from 'react';
-import Header from './components/Header';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
 
-const headerTitle = '';
-
-// after status bar, replace the <Text> with
 export default class Main extends React.Component {
-  render() {
-    return (
-      <View style={styles.centered}>
-        <Header title ={headerTitle} />
-        <Image
-         //Show image from you project directory like below
-         source={require('../assets/dook_header.png')}
-        />
+  state = { currentUser: null }
+
+  componentDidMount() {
+    const { currentUser } = firebase.auth()
+
+    this.setState({ currentUser })
+  }
+
+
+  signOutUser = () => {
+    firebase.auth().signOut().then(function (user){
+    }).catch(function(error) {
+      console.log(error)
+    });
+  }
+
+render() {
+    const { currentUser } = this.state
+return (
+      <View style={styles.container}>
+        <Text>
+          Hi {currentUser && currentUser.email}!
+        </Text>
+        <Button onPress={() => this.signOutUser()}>
+          <Text> Sign Out </Text>
+        </Button>
       </View>
-    );
+    )
   }
 }
 const styles = StyleSheet.create({
-  centered: {
-    backgroundColor: '#64a70b',
+  container: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center'
   }
-});
+})
