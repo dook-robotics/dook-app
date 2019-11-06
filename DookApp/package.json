@@ -9,15 +9,34 @@
   },
   "dependencies": {
     "expo": "^35.0.0",
+    "expo-firebase-analytics": "^2.0.0",
+    "expo-firebase-app": "^2.0.0",
+    "expo-firebase-auth": "^2.0.0",
+    "expo-firebase-crashlytics": "^2.0.0",
+    "expo-firebase-database": "^2.0.0",
+    "expo-firebase-firestore": "^2.0.0",
+    "expo-firebase-functions": "^2.0.0",
+    "expo-firebase-instance-id": "^2.0.0",
+    "expo-firebase-invites": "^2.0.0",
+    "expo-firebase-links": "^2.0.0",
+    "expo-firebase-messaging": "^2.0.0",
+    "expo-firebase-notifications": "^2.0.0",
+    "expo-firebase-performance": "^2.0.0",
+    "expo-firebase-remote-config": "^2.0.0",
+    "expo-firebase-storage": "^2.0.0",
+    "expo-font": "~7.0.0",
+    "expo-react-native-adapter": "^3.0.1",
     "native-base": "^2.13.8",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
-    "react-native-modal-datetime-picker": "^7.6.0",
-    "react-native-web": "^0.11.7"
+    "react-native-firebase": "^5.5.6",
+    "react-native-gesture-handler": "^1.5.0",
+    "react-native-web": "^0.11.7",
+    "react-navigation": "^4.0.10"
   },
   "devDependencies": {
-    "babel-preset-expo": "^7.0.0"
+    "babel-preset-expo": "^7.1.0"
   },
   "private": true
 }

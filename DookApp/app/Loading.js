@@ -13,21 +13,19 @@ ORGANIZATION:
   Dook Robotics - https://github.com/dook-robotics
 
 PURPOSE:
-  a Main screen of our application that we only show to an authenticated user.
+  A Loading screen that displays until we determine the auth state of a user... pretty much our splash screen
 */
-// Main.js
-import React from 'react'
-import { StyleSheet, Platform, Image, Text, View } from 'react-native'
+// Loading.js
+import React from 'react';
+import firebase from 'react-native-firebase';
+import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 
-export default class Main extends React.Component {
-  state = { currentUser: null }
-render() {
-    const { currentUser } = this.state
-return (
+export default class Loading extends React.Component {
+  render() {
+    return (
       <View style={styles.container}>
-        <Text>
-          Hi {currentUser && currentUser.email}!
-        </Text>
+        <Text>Loading</Text>
+        <ActivityIndicator size="large" />
       </View>
     )
   }
@@ -36,6 +34,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 })
