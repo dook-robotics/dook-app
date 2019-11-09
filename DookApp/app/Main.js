@@ -17,8 +17,8 @@ PURPOSE:
 */
 // Main.js
 import React from 'react'
-import { StyleSheet, Platform, Image, View } from 'react-native'
-import { Container, Header, Content, Button, Text } from 'native-base';
+import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput } from 'react-native'
+import { Container, Header, Content, Button, Text, Body, Title, Right, Left, Icon } from 'native-base';
 import * as firebase from 'firebase';
 
 
@@ -27,7 +27,6 @@ export default class Main extends React.Component {
 
   componentDidMount() {
     const { currentUser } = firebase.auth()
-
     this.setState({ currentUser })
   }
 
@@ -39,24 +38,61 @@ export default class Main extends React.Component {
     });
   }
 
-render() {
+  render() {
     const { currentUser } = this.state
-return (
-      <View style={styles.container}>
-        <Text>
-          Hi {currentUser && currentUser.email}!
-        </Text>
-        <Button onPress={() => this.signOutUser()}>
-          <Text> Sign Out </Text>
-        </Button>
-      </View>
-    )
-  }
+    return (
+          <View >
+            <Header style = {styles.colorz}>
+              <Body>
+                <Title >DOOK</Title>
+              </Body>
+              <Right>
+                <Button light hasText transparent onPress={() => this.signOutUser()}>
+                  <Text>Sign Out</Text>
+                </Button>
+              </Right>
+            </Header>
+            <View style = {styles.container}>
+              <TouchableOpacity style ={styles.myButton}>
+              </TouchableOpacity>
+              <View style = {styles.container}>
+                <View style={{flexDirection:"row"}}>
+                     <View style={{flex:1}}>
+                         <Text placeholder="Test" style={{justifyContent: 'flex-start',color:'black'}} >
+                         T1
+                         </Text>
+                     </View>
+                     <View style={{flex:1}}>
+                         <Text placeholder="Test" style={{justifyContent: 'flex-end',color:'black'}} >
+                         T2
+                         </Text>
+                     </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        )
+    }
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 50
+  },
+  colorz: {
+    backgroundColor:'green',
+    textAlign:'center'
+  },
+  headerWord: {
+    textAlign: 'center'
+  },
+  myButton:{
+    padding: 5,
+    height: 300,
+    width: 300,  //The Width must be the same as the height
+    borderRadius:600, //Then Make the Border Radius twice the size of width or Height
+    backgroundColor:'green',
+
   }
 })

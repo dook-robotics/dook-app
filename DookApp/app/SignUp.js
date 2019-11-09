@@ -20,6 +20,7 @@ import { AppLoading } from 'expo';
 import { Container, Text, Footer, Button, Form, Item, Input,Content, Label } from 'native-base';
 import { StyleSheet, View, Alert } from 'react-native';
 import Config from '../Config.js'
+import * as firebase from 'firebase';
 
 
 export default class SignUp extends React.Component {
@@ -28,7 +29,9 @@ export default class SignUp extends React.Component {
 
       this.state=({
         email: '',
-        password: ''
+        password: '',
+        vPassword:'',
+        vEmail:''
       })
   }
 
@@ -37,7 +40,15 @@ export default class SignUp extends React.Component {
     try {
       if(this.state.password.length<6)
       {
-        alert("Please enter at least 6 characters")
+        alert("Please enter at least 6 characters for the password")
+        return;
+      }
+      if(this.state.email != this.state.vEmail){
+        alert("Emails do not match!")
+        return;
+      }
+      if(this.state.password != this.state.vPassword){
+        alert("Passwords do not match!")
         return;
       }
       firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -49,25 +60,34 @@ export default class SignUp extends React.Component {
   }
 
 
+
   render() {
     return (
       <Container style = {styles.sContainer}>
-        <Text> Welcome to the DOOK app! Please log in :) </Text>
+        <Text> Create your account </Text>
         <Form style = {styles.usr}>
           <Item stackedLabel >
             <Label >E-mail</Label>
-            <Input />
+            <Input onChangeText={email => this.setState({ email })} />
+          </Item>
+          <Item stackedLabel >
+            <Label >Verify E-mail</Label>
+            <Input onChangeText={vEmail => this.setState({ vEmail })} />
           </Item>
           <Item stackedLabel last>
             <Label>Password</Label>
-            <Input />
+            <Input onChangeText={password => this.setState({ password })} secureTextEntry={true}/>
+          </Item>
+          <Item stackedLabel last>
+            <Label>Verify Password</Label>
+            <Input onChangeText={vPassword => this.setState({ vPassword })} secureTextEntry={true}/>
           </Item>
         </Form>
-        <Button bordered success style={styles.btn}>
+        <Button bordered success style={styles.btn} onPress={() => this.signUpUser(this.state.email, this.state.password)}>
           <Text> Complete registration! </Text>
         </Button>
         <Button hasText transparent onPress={() => this.props.navigation.navigate('LogIn')}>
-          <Text>Go Back</Text>
+          <Text>Already have an account? Login</Text>
         </Button>
       </Container>
     );
@@ -96,5 +116,6 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
     alignItems: 'center',
+    textAlign: 'center'
   },
 });

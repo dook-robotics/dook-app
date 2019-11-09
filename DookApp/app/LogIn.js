@@ -19,10 +19,9 @@ PURPOSE:
 import React from 'react';
 import { AppLoading } from 'expo';
 import { Container, Text, Footer, Button, Form, Item, Input,Content, Label } from 'native-base';
-import { StyleSheet, View, Alert } from 'react-native';
+import { StyleSheet, Image, View, Alert } from 'react-native';
 import {firebaseConfig} from '../Config';
 import * as firebase from 'firebase';
-
 
 
 export default class LogIn extends React.Component {
@@ -44,15 +43,21 @@ export default class LogIn extends React.Component {
       .then((user) =>this.props.navigation.navigate('Main'))
     }
     catch(error) {
-      console.log(error.toString())
-    }
+        Alert.alert(
+                'Invalid Log In',
+                [
+                  {text: 'ok'},
+                ],
+                { cancelable: false }
+              )
+          }
+
   }
-
-
   render() {
     return (
       <Container style = {styles.sContainer}>
-        <Text> Welcome to the DOOK app! Please log in :) </Text>
+        <Image source={require('../assets/dook.png')} style = {styles.image}/>
+        <Text style = {styles.textInput}> Welcome to the DOOK app! Please log in: </Text>
         <Form style = {styles.usr}>
           <Item stackedLabel >
             <Label >E-mail</Label>
@@ -67,7 +72,10 @@ export default class LogIn extends React.Component {
           <Text>Log In</Text>
         </Button>
         <Button bordered success style={styles.btn} onPress={() => this.props.navigation.navigate('SignUp')}>
-          <Text> Need an account? Sign Up </Text>
+          <Text style={styles.txtCtr}> Need an account? Sign Up </Text>
+        </Button>
+        <Button hasText transparent >
+          <Text>Forgot Password</Text>
         </Button>
       </Container>
     );
@@ -96,8 +104,26 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 10,
     alignItems: 'center',
+    textAlign: 'center'
   },
   txtCtr: {
     alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center'
+
+  },
+  image: {
+    width: 300,
+    height: 120,
+    resizeMode: 'stretch'
+  },
+  textInput: {
+    height: 40,
+    fontSize:20,
+    width: '90%',
+    borderColor: '#9b9b9b',
+    borderBottomWidth: 1,
+    marginTop: 8,
+    marginVertical: 15
   }
 });
