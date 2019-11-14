@@ -20,6 +20,7 @@ import React from 'react'
 import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput } from 'react-native'
 import { Container, Header, Content, Button, Text, Body, Title, Right, Left, Icon } from 'native-base';
 import * as firebase from 'firebase';
+import AnimatedProgressWheel from 'react-native-progress-wheel';
 
 
 export default class Main extends React.Component {
@@ -57,7 +58,7 @@ export default class Main extends React.Component {
               </TouchableOpacity>
               <View style = {styles.container}>
                 <View style={{flexDirection:"row"}}>
-                     <View style={{flex:1}}>
+                     {/*<View style={{flex:1}}>
                          <Text placeholder="Test" style={{justifyContent: 'flex-start',color:'black'}} >
                          T1
                          </Text>
@@ -66,7 +67,24 @@ export default class Main extends React.Component {
                          <Text placeholder="Test" style={{justifyContent: 'flex-end',color:'black'}} >
                          T2
                          </Text>
-                     </View>
+                     </View>*/}
+                </View>
+                <View style={{flexDirection:"row"}}>
+                  <View style={{flexDirection:"col",marginRight:"15%"}}>
+                    <Text style={{fontWeight:'bold'}}>Waste</Text>
+                  </View>
+                  <View style={{flexDirection:"col", marginLeft:"20%"}}>
+                    <Text style={{fontWeight:'bold',marginBottom:"20%"}}>Battery</Text>
+                    <AnimatedProgressWheel
+                      size={80}
+                      width={15}
+                      progress={80}
+                      animateFromValue={0}
+                      duration={5000}
+                      color={'white'}
+                      fullColor={'red'}
+                      />
+                  </View>
                 </View>
               </View>
             </View>
