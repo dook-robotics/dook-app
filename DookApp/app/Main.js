@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
   },
   myButton:{
     padding: 5,
-    height: 250,
-    width: 250,  //The Width must be the same as the height
+    height: 300,
+    width: 300,  //The Width must be the same as the height
     borderRadius:600, //Then Make the Border Radius twice the size of width or Height
     backgroundColor:'green'
 
