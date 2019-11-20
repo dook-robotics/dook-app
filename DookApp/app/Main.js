@@ -21,10 +21,15 @@ import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput } from 'r
 import { Container, Header, Content, Button, Text, Body, Title, Right, Left, Icon } from 'native-base';
 import * as firebase from 'firebase';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
+import ProgressBarAnimated from 'react-native-progress-bar-animated';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import {Helmet} from "react-helmet";
+import ProgressiveImage from 'react-progressive-image';
 
 
 export default class Main extends React.Component {
   state = { currentUser: null }
+
 
   componentDidMount() {
     const { currentUser } = firebase.auth()
@@ -58,20 +63,19 @@ export default class Main extends React.Component {
               </TouchableOpacity>
               <View style = {styles.container}>
                 <View style={{flexDirection:"row"}}>
-                     {/*<View style={{flex:1}}>
-                         <Text placeholder="Test" style={{justifyContent: 'flex-start',color:'black'}} >
-                         T1
-                         </Text>
-                     </View>
-                     <View style={{flex:1}}>
-                         <Text placeholder="Test" style={{justifyContent: 'flex-end',color:'black'}} >
-                         T2
-                         </Text>
-                     </View>*/}
                 </View>
                 <View style={{flexDirection:"row"}}>
-                  <View style={{flexDirection:"col",marginRight:"15%"}}>
-                    <Text style={{fontWeight:'bold'}}>Waste</Text>
+                  <View style={{flexDirection:"col",marginRight:"20%"}}>
+                    <Text style={{fontWeight:'bold',marginBottom:"20%"}}>Waste</Text>
+                    <AnimatedProgressWheel
+                      size={80}
+                      width={15}
+                      progress={100}
+                      animateFromValue={0}
+                      duration={5000}
+                      color={'#daa520'}
+                      fullColor={'#8b4513'}
+                      />
                   </View>
                   <View style={{flexDirection:"col", marginLeft:"20%"}}>
                     <Text style={{fontWeight:'bold',marginBottom:"20%"}}>Battery</Text>
@@ -81,14 +85,15 @@ export default class Main extends React.Component {
                       progress={80}
                       animateFromValue={0}
                       duration={5000}
-                      color={'white'}
-                      fullColor={'red'}
+                      color={'red'}
+                      fullColor={'green'}
                       />
                   </View>
                 </View>
               </View>
             </View>
           </View>
+
         )
     }
 }
@@ -107,10 +112,10 @@ const styles = StyleSheet.create({
   },
   myButton:{
     padding: 5,
-    height: 300,
-    width: 300,  //The Width must be the same as the height
+    height: 250,
+    width: 250,  //The Width must be the same as the height
     borderRadius:600, //Then Make the Border Radius twice the size of width or Height
-    backgroundColor:'green',
+    backgroundColor:'green'
 
   }
 })
