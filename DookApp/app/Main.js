@@ -17,14 +17,17 @@ PURPOSE:
 */
 // Main.js
 import React from 'react'
-import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput, Alert,TouchableWithoutFeedback } from 'react-native'
 import { Container, Header, Content, Button, Text, Body, Title, Right, Left, Icon } from 'native-base';
 import * as firebase from 'firebase';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 
 
 export default class Main extends React.Component {
-  state = { currentUser: null }
+  state = {
+    currentUser: null,
+    isItOn: null
+  }
 
   componentDidMount() {
     const { currentUser } = firebase.auth()
@@ -39,8 +42,35 @@ export default class Main extends React.Component {
     });
   }
 
+  powerButton = (temp) => {
+    var db = firebase.database();
+    var newPostKey = firebase.database().ref().child('posts').push().key;
+    if (this.state.isItOn == null || this.state.isItOn == false){
+      this.setState({ isItOn: true });
+      //this.state.isItOn = true;
+    }
+    else {
+      this.setState({isItOn: false});
+      //this.state.isItOn = false;
+    }
+    var postData = {
+      power: this.state.isItOn
+    };
+    var updates = {};
+    updates['/posts/' + newPostKey] = postData;
+    firebase.database().ref().update(updates)
+  }
+
+
   render() {
-    const { currentUser } = this.state
+    const { currentUser } = this.state;
+
+    if (this.state.isItOn == false || this.state.isItOn == null) {
+      button = <TouchableOpacity style ={styles.myButton} onPress = {() => this.powerButton(this.state.isItOn)}/>;
+    } else {
+      button = <TouchableOpacity style ={styles.myButton2} onPress = {() => this.powerButton(this.state.isItOn)}/>;
+    }
+
     return (
           <View >
             <Header style = {styles.colorz}>
@@ -54,8 +84,8 @@ export default class Main extends React.Component {
               </Right>
             </Header>
             <View style = {styles.container}>
-              <TouchableOpacity style ={styles.myButton}>
-              </TouchableOpacity>
+              {/*<TouchableOpacity style ={styles.myButton} onPress = {() => this.powerButton(this.state.isItOn)}>*/}
+              {button}
               <View style = {styles.container}>
                 <View style={{flexDirection:"row"}}>
                      {/*<View style={{flex:1}}>
@@ -111,6 +141,14 @@ const styles = StyleSheet.create({
     width: 300,  //The Width must be the same as the height
     borderRadius:600, //Then Make the Border Radius twice the size of width or Height
     backgroundColor:'green',
+
+  },
+  myButton2:{
+    padding: 5,
+    height: 300,
+    width: 300,  //The Width must be the same as the height
+    borderRadius:600, //Then Make the Border Radius twice the size of width or Height
+    backgroundColor:'red',
 
   }
 })
