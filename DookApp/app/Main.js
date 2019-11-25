@@ -16,9 +16,9 @@ PURPOSE:
   a Main screen of our application that we only show to an authenticated user.
 */
 // Main.js
-import React from 'react'
+import React, {Component} from 'react'
 import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput, Alert,TouchableWithoutFeedback } from 'react-native'
-import { Container, Header, Content, Button, Text, Body, Title, Right, Left, Icon } from 'native-base';
+import { Container, Header, Content, Button, Icon,Text, Body, Title, Right, Left,Tabs , Footer, FooterTab} from 'native-base';
 import * as firebase from 'firebase';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
@@ -27,13 +27,15 @@ import {Helmet} from "react-helmet";
 import ProgressiveImage from 'react-progressive-image';
 
 
+
+
+
+
 export default class Main extends React.Component {
   state = {
     currentUser: null,
-    isItOn: null
+    isItOn: null,
   }
-
-
   componentDidMount() {
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
@@ -65,7 +67,12 @@ export default class Main extends React.Component {
     updates['/posts/' + newPostKey] = postData;
     firebase.database().ref().update(updates)
   }
+  nav = (index) =>{
 
+  }
+
+
+  /*Navigation*/
 
   render() {
     const { currentUser } = this.state;
@@ -76,8 +83,10 @@ export default class Main extends React.Component {
       button = <TouchableOpacity style ={styles.myButton2} onPress = {() => this.powerButton(this.state.isItOn)}/>;
     }
 
+
     return (
-          <View >
+            <Container>
+            <View >
             <Header style = {styles.colorz}>
               <Body>
                 <Title >DOOK</Title>
@@ -95,11 +104,11 @@ export default class Main extends React.Component {
                 <View style={{flexDirection:"row"}}>
                 </View>
                 <View style={{flexDirection:"row"}}>
-                  <View style={{flexDirection:"col",marginRight:"20%"}}>
-                    <Text style={{fontWeight:'bold',marginBottom:"20%"}}>Waste</Text>
+                  <View style={{flexDirection:"col",marginRight:"15%"}}>
+                    <Text style={{fontWeight:'bold',marginBottom:"20%",textAlign:"center"}}>Waste</Text>
                     <AnimatedProgressWheel
-                      size={80}
-                      width={15}
+                      size={120}
+                      width={25}
                       progress={100}
                       animateFromValue={0}
                       duration={5000}
@@ -107,11 +116,11 @@ export default class Main extends React.Component {
                       fullColor={'#8b4513'}
                       />
                   </View>
-                  <View style={{flexDirection:"col", marginLeft:"20%"}}>
-                    <Text style={{fontWeight:'bold',marginBottom:"20%"}}>Battery</Text>
+                  <View style={{flexDirection:"col", marginLeft:"15%"}}>
+                    <Text style={{fontWeight:'bold',marginBottom:"20%",textAlign:"center"}}>Battery</Text>
                     <AnimatedProgressWheel
-                      size={80}
-                      width={15}
+                      size={120}
+                      width={25}
                       progress={80}
                       animateFromValue={0}
                       duration={5000}
@@ -122,11 +131,28 @@ export default class Main extends React.Component {
                 </View>
               </View>
             </View>
-          </View>
+            </View>
+            <View style={{marginTop:"40%"}}>
+            <Footer>
+              <FooterTab>
+                <Button>
+                  <Text>Settings</Text>
+                </Button>
+                <Button active>
+                  <Text >Home</Text>
+                </Button>
+                <Button>
+                  <Text>Schedule</Text>
+                </Button>
+              </FooterTab>
+            </Footer>
+            </View>
+            </Container>
 
         )
     }
 }
+
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
