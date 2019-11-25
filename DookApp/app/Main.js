@@ -88,8 +88,8 @@ export default class Main extends React.Component {
             <Container>
             <View >
             <Header style = {styles.colorz}>
-              <Body>
-                <Title >DOOK</Title>
+              <Body style={{marginLeft:"35%"}}>
+                <Title>DOOK</Title>
               </Body>
               <Right>
                 <Button light hasText transparent onPress={() => this.signOutUser()}>
