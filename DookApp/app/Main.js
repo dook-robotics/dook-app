@@ -18,7 +18,7 @@ PURPOSE:
 // Main.js
 import React, {Component} from 'react'
 import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput, Alert,TouchableWithoutFeedback } from 'react-native'
-import { Container, Header, Content, Button, Icon,Text, Body, Title, Right, Left,Tabs , Footer, FooterTab} from 'native-base';
+import { Container, Header, Content, Button, Icon,Text, Body, Title, Right, Left,Tabs , Footer, FooterTab, ListItem} from 'native-base';
 import * as firebase from 'firebase';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
@@ -28,14 +28,13 @@ import ProgressiveImage from 'react-progressive-image';
 
 
 
-
-
-
 export default class Main extends React.Component {
+
   state = {
-    currentUser: null,
-    isItOn: null,
-  }
+      currentUser: null,
+      isItOn: null,
+    }
+
   componentDidMount() {
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
@@ -86,67 +85,70 @@ export default class Main extends React.Component {
 
     return (
             <Container>
-            <View >
-            <Header style = {styles.colorz}>
-              <Body style={{marginLeft:"35%"}}>
-                <Title>DOOK</Title>
-              </Body>
-              <Right>
-                <Button light hasText transparent onPress={() => this.signOutUser()}>
-                  <Text>Sign Out</Text>
-                </Button>
-              </Right>
-            </Header>
-            <View style = {styles.container}>
-              {/*<TouchableOpacity style ={styles.myButton} onPress = {() => this.powerButton(this.state.isItOn)}>*/}
-              {button}
+              <View >
+              <Header style = {styles.colorz}>
+                <Body style={{marginLeft:"35%"}}>
+                  <Image
+                    style={{width: 200, height: 50}}
+                    source={require('../assets/dook2.png')}
+                  />
+                </Body>
+                <Right>
+                  <Button light hasText transparent onPress={() => this.signOutUser()}>
+                    <Text>Sign Out</Text>
+                  </Button>
+                </Right>
+              </Header>
               <View style = {styles.container}>
-                <View style={{flexDirection:"row"}}>
-                </View>
-                <View style={{flexDirection:"row"}}>
-                  <View style={{flexDirection:"col",marginRight:"15%"}}>
-                    <Text style={{fontWeight:'bold',marginBottom:"20%",textAlign:"center"}}>Waste</Text>
-                    <AnimatedProgressWheel
-                      size={120}
-                      width={25}
-                      progress={100}
-                      animateFromValue={0}
-                      duration={5000}
-                      color={'#daa520'}
-                      fullColor={'#8b4513'}
-                      />
+                {/*<TouchableOpacity style ={styles.myButton} onPress = {() => this.powerButton(this.state.isItOn)}>*/}
+                {button}
+                <View style = {styles.container}>
+                  <View style={{flexDirection:"row"}}>
                   </View>
-                  <View style={{flexDirection:"col", marginLeft:"15%"}}>
-                    <Text style={{fontWeight:'bold',marginBottom:"20%",textAlign:"center"}}>Battery</Text>
-                    <AnimatedProgressWheel
-                      size={120}
-                      width={25}
-                      progress={80}
-                      animateFromValue={0}
-                      duration={5000}
-                      color={'red'}
-                      fullColor={'green'}
-                      />
+                  <View style={{flexDirection:"row"}}>
+                    <View style={{flexDirection:"col",marginRight:"15%"}}>
+                      <Text style={{fontWeight:'bold',marginBottom:"20%",textAlign:"center"}}>Waste</Text>
+                      <AnimatedProgressWheel
+                        size={120}
+                        width={25}
+                        progress={100}
+                        animateFromValue={0}
+                        duration={5000}
+                        color={'#daa520'}
+                        fullColor={'#8b4513'}
+                        />
+                    </View>
+                    <View style={{flexDirection:"col", marginLeft:"15%"}}>
+                      <Text style={{fontWeight:'bold',marginBottom:"20%",textAlign:"center"}}>Battery</Text>
+                      <AnimatedProgressWheel
+                        size={120}
+                        width={25}
+                        progress={80}
+                        animateFromValue={0}
+                        duration={5000}
+                        color={'red'}
+                        fullColor={'green'}
+                        />
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-            </View>
-            <View style={{marginTop:"40%"}}>
-            <Footer>
-              <FooterTab>
-                <Button>
-                  <Text>Settings</Text>
-                </Button>
-                <Button active>
-                  <Text >Home</Text>
-                </Button>
-                <Button>
-                  <Text>Schedule</Text>
-                </Button>
-              </FooterTab>
-            </Footer>
-            </View>
+              </View>
+              <View style={{marginTop:"40%"}}>
+              <Footer>
+                <FooterTab>
+                  <Button onPress={() => this.props.navigation.navigate('Settings')}>
+                    <Text>Settings</Text>
+                  </Button>
+                  <Button active>
+                    <Text >Home</Text>
+                  </Button>
+                  <Button>
+                    <Text>Schedule</Text>
+                  </Button>
+                </FooterTab>
+              </Footer>
+              </View>
             </Container>
 
         )
