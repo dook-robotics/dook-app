@@ -13,9 +13,9 @@ ORGANIZATION:
   Dook Robotics - https://github.com/dook-robotics
 
 PURPOSE:
-  a Main screen of our application that we only show to an authenticated user.
+  a setting screen of our application that we only show to an authenticated user. Allows for log-outs
 */
-// Main.js
+// Settings.js
 import React, {Component} from 'react'
 import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput, Alert,TouchableWithoutFeedback } from 'react-native'
 import { Container, Header, Content, Button, Icon,Text, Body, Title, Right, Left,Tabs , Footer, FooterTab, ListItem} from 'native-base';

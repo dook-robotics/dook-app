@@ -26,6 +26,7 @@ import Loading from './app/Loading';
 import Main from './app/Main';
 import SignUp from './app/SignUp';
 import Settings from './app/Settings';
+import Running from './app/Running';
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
 import * as firebase from 'firebase';
 import {firebaseConfig} from './Config';
@@ -39,7 +40,8 @@ const RootStack = createSwitchNavigator(
     SignUp: SignUp,
     LogIn: LogIn,
     Main: Main,
-    Settings: Settings
+    Settings: Settings,
+    Running: Running
   },
   {
     initialRouteName: 'Loading'

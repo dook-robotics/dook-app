@@ -53,6 +53,7 @@ export default class Main extends React.Component {
     var newPostKey = firebase.database().ref().child('posts').push().key;
     if (this.state.isItOn == null || this.state.isItOn == false){
       this.setState({ isItOn: true });
+      this.props.navigation.navigate('Running')
       //this.state.isItOn = true;
     }
     else {
@@ -66,12 +67,7 @@ export default class Main extends React.Component {
     updates['/posts/' + newPostKey] = postData;
     firebase.database().ref().update(updates)
   }
-  nav = (index) =>{
 
-  }
-
-
-  /*Navigation*/
 
   render() {
     const { currentUser } = this.state;
@@ -93,11 +89,6 @@ export default class Main extends React.Component {
                     source={require('../assets/dook2.png')}
                   />
                 </Body>
-                <Right>
-                  <Button light hasText transparent onPress={() => this.signOutUser()}>
-                    <Text>Sign Out</Text>
-                  </Button>
-                </Right>
               </Header>
               <View style = {styles.container}>
                 {/*<TouchableOpacity style ={styles.myButton} onPress = {() => this.powerButton(this.state.isItOn)}>*/}
