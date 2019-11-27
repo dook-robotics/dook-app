@@ -27,6 +27,28 @@ import {Helmet} from "react-helmet";
 import ProgressiveImage from 'react-progressive-image';
 
 export default class Running extends React.Component {
+
+  powerButton = (temp) => {
+    var db = firebase.database();
+    var newPostKey = firebase.database().ref().child('posts').push().key;
+    if (this.state.isItOn == null || this.state.isItOn == false){
+      this.setState({ isItOn: true });
+      this.props.navigation.navigate('Running')
+      //this.state.isItOn = true;
+    }
+    else {
+      this.props.navigation.navigate('Main')
+      //this.state.isItOn = false;
+    }
+    var postData = {
+      power: this.state.isItOn
+    };
+    var updates = {};
+    updates['/posts/' + newPostKey] = postData;
+    firebase.database().ref().update(updates)
+  }
+
+
   render() {
     return (
             <Container style = {styles.container}>
