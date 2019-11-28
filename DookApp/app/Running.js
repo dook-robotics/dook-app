@@ -64,7 +64,7 @@ export default class Running extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container2: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'green',

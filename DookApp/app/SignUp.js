@@ -55,8 +55,14 @@ export default class SignUp extends React.Component {
         alert("Congratulations, your account has been setup")
     }
     catch(error){
-      console.log(error.toString())
-    }
+      Alert.alert(
+              'Invalid Sign Up',
+              [
+                {text: 'ok'},
+              ],
+              { cancelable: false }
+            )
+        }
   }
 
 
