@@ -165,13 +165,13 @@ export default class Main extends React.Component {
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:20 }}>Ready to clean</Text>
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press clean to start</Text>
           <View style = {styles.container}>
+          <View>
             <TouchableOpacity style ={styles.myButton} source={require('../assets/clean.png')} onPress = {() => this.setState({ isItOn: true })}>
-            <Image
-              style={{width:400, height: 200,  resizeMode: 'stretch'}}
-              source={require('../assets/clean.png')}
-            />
             </TouchableOpacity>
-
+            <Image
+              style={styles.Clean}
+              source={require('../assets/clean.png')}/>
+           </View>
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
               </View>
@@ -219,9 +219,11 @@ export default class Main extends React.Component {
               <Button active>
                 <Text >Home</Text>
               </Button>
-              <Button onPress={() => this.props.navigation.navigate('Scheduler')}>
+              {
+              /*<Button onPress={() => this.props.navigation.navigate('Scheduler')}>
                 <Text>Schedule</Text>
-              </Button>
+              </Button>*/
+            }
             </FooterTab>
           </Footer>
           </View>
@@ -241,15 +243,17 @@ export default class Main extends React.Component {
               />
             </Body>
           </Header>
-          <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:20 }}>Now running for 30 minutes</Text>
+          <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:20 }}>Dook is now running</Text>
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press button to force stop</Text>
           <View style = {styles.container}>
+            <View>
             <TouchableOpacity style ={styles.myButton3} onPress = {() => this.setState({ isItOn: false })}>
             </TouchableOpacity>
             <Image
               style={styles.Clean}
               source={require('../assets/clean.png')}
             />
+            </View>
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
               </View>
@@ -296,9 +300,6 @@ export default class Main extends React.Component {
               </Button>
               <Button active>
                 <Text >Home</Text>
-              </Button>
-              <Button onPress={() => this.props.navigation.navigate('Scheduler')}>
-                <Text>Schedule</Text>
               </Button>
             </FooterTab>
           </Footer>
@@ -372,13 +373,13 @@ const styles = StyleSheet.create({
 
   },
   Clean:{
-    width:350,
+    width: 350,
     height: 200,
+    marginTop: '18%',
     position: 'absolute',
-    resizeMode:'center',
     justifyContent:'center',
-    top:0,
-    left:0
+    alignItems:'center',
+    resizeMode: 'center'
 
 
   }

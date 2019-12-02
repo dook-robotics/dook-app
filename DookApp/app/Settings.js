@@ -49,32 +49,44 @@ export default class Settings extends React.Component {
     return (
             <Container>
               <View>
-              <Header style = {styles.colorz}>
-                <Body style={{marginLeft:"5%"}}>
-                  <Image
-                    style={{width: 200, height: 50, alignItems:'center'}}
-                    source={require('../assets/dookie.png')}
-                  />
-                </Body>
-              </Header>
-                <Button light hasText  onPress={() => this.signOutUser()}>
-                  <Text>Sign Out</Text>
+                <Header style = {styles.colorz}>
+                  <Body>
+                    <Image
+                      style={{width: 200, height: 50, justifyContent:'center'}}
+                      source={require('../assets/dookie.png')}
+                    />
+                  </Body>
+                </Header>
+                <Button light hasText style={styles.settingsButton} onPress={() => this.signOutUser()}>
+                  <Text style={{fontWeight:'bold', fontSize:24}}>Sign Out</Text>
                 </Button>
-                <Footer>
-                  <FooterTab>
-                    <Button active onPress={() => this.props.navigation.navigate('Settings')}>
-                      <Text>Settings</Text>
-                    </Button>
-                    <Button  onPress={() => this.props.navigation.navigate('Main')}>
-                      <Text >Home</Text>
-                    </Button>
-                    <Button onPress={() => this.props.navigation.navigate('Scheduler')}>
-                      <Text>Schedule</Text>
-                    </Button>
-                  </FooterTab>
-                </Footer>
+              </View>
+              <View style={{marginTop:'112%'}}>
+                <Image
+                style={{width: 500, height: 150, alignItems:'center',resizeMode:'stretch',opacity: 0.2}}
+                source={require('../assets/landscape.png')}
+                />
+              </View>
+              <View>
+              <Footer>
+                <FooterTab>
+                  <Button active onPress={() => this.props.navigation.navigate('Settings')}>
+                    <Text>Settings</Text>
+                  </Button>
+                  <Button  onPress={() => this.props.navigation.navigate('Main')}>
+                    <Text >Home</Text>
+                  </Button>
+                  {
+                  /*<Button>
+                    <Text>Schedule</Text>
+                  </Button>*/
+                }
+                </FooterTab>
+              </Footer>
               </View>
             </Container>
+
+
         )
     }
 }
@@ -88,7 +100,7 @@ const styles = StyleSheet.create({
   colorz: {
     backgroundColor:'green',
     textAlign:'center',
-    height:75
+    height: 75
   },
   headerWord: {
     textAlign: 'center'
@@ -108,5 +120,12 @@ const styles = StyleSheet.create({
     borderRadius:600, //Then Make the Border Radius twice the size of width or Height
     backgroundColor:'red',
 
+  },
+  settingsButton:{
+    height:100,
+    justifyContent:'center',
+    marginTop:'5%'
   }
+
+
 })
