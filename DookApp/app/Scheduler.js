@@ -27,9 +27,21 @@ import {Helmet} from "react-helmet";
 import ProgressiveImage from 'react-progressive-image';
 
 export default class Scheduler extends React.Component {
+  constructor() {
+      super()
+      this.state = {
+          reservas: []
+      }
+  }
 
     componentDidMount() {
-
+      const readDookData = ()=> {
+        const piRef =  firebase.database().ref('Pi')
+        piRef.on('value', (snapshot)=> {
+          const state = snapshot.val()
+          this.setState({reservas:state}) })
+    }
+    readDookData();
     }
 
 
@@ -39,12 +51,14 @@ export default class Scheduler extends React.Component {
 
     return (
             <Container>
+            {console.log(this.state.reservas)}
+
               <View>
                 <Header style = {styles.colorz}>
-                  <Body style={{marginLeft:"35%"}}>
+                  <Body style={{marginLeft:"5%"}}>
                     <Image
-                      style={{width: 200, height: 50}}
-                      source={require('../assets/dook2.png')}
+                      style={{width: 200, height: 50, alignItems:'center'}}
+                      source={require('../assets/dookie.png')}
                     />
                   </Body>
                 </Header>
@@ -77,7 +91,8 @@ const styles = StyleSheet.create({
   },
   colorz: {
     backgroundColor:'green',
-    textAlign:'center'
+    textAlign:'center',
+    height: 75
   },
   headerWord: {
     textAlign: 'center'

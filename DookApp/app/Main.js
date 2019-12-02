@@ -30,15 +30,32 @@ import ProgressiveImage from 'react-progressive-image';
 
 
 export default class Main extends React.Component {
-  state = {
-      currentUser: null,
-      isItOn: null,
-      powerLevel: 32
-    }
+  constructor() {
+      super()
+      this.state = {
+          reservas: [],
+          currentUser: null,
+          isItOn: null,
+          powerLevel: 32
+      }
+  }
+
+//  state = {
+  //    currentUser: null,
+//      isItOn: null,
+  //    powerLevel: 32
+    //}
 
   componentDidMount() {
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
+    const readDookData = ()=> {
+      const piRef =  firebase.database().ref('Pi')
+      piRef.on('value', (snapshot)=> {
+        const state = snapshot.val()
+        this.setState({reservas:state}) })
+  }
+  readDookData();
   }
 
 
@@ -61,9 +78,7 @@ export default class Main extends React.Component {
 
   }
 
-  postDate(){
-    var db = firebase.database();
-    var newPostKey = firebase.database().ref().child('posts').push().key;
+  postPowerStatus(){
     var postData = {
       power: this.state.isItOn
     };
@@ -78,7 +93,7 @@ export default class Main extends React.Component {
     //Don't let user run if less than 31.... So check if less than 31
     //GotVoltage - 31
     //this.setState({powerLevel:30});
-    if(this.state.powerLevel < 31){
+    if(this.state.reservas.Voltage <= 31){
       return(
         <Container>
           <View >
@@ -125,15 +140,14 @@ export default class Main extends React.Component {
   }
 
   RunningButton(){
-    var db = firebase.database();
-    var ref = db.ref("voltage");
-    ref.orderByChild("height").on("child_added", function(snapshot) {
-      console.log(snapshot.key + " was " + snapshot.val().height + " meters tall");
-    });
-
+//    var db = firebase.database();
+//    var ref = db.ref("voltage");
+//    ref.orderByChild("height").on("child_added", function(snapshot) {
+//      console.log(snapshot.key + " was " + snapshot.val().height + " meters tall");
+//    });
 
     //-----------------------------------------------------------------------------------------------
-    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.powerLevel > 31){
+    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 31){
       return(
         <Container>
           <View >
@@ -164,7 +178,7 @@ export default class Main extends React.Component {
                   <AnimatedProgressWheel
                     size={120}
                     width={25}
-                    progress={this.state.powerLevel}
+                    progress={((this.state.reservas.Voltage)-31)*10}
                     animateFromValue={0}
                     duration={5000}
                     color={'#daa520'}
@@ -176,7 +190,7 @@ export default class Main extends React.Component {
                     <AnimatedProgressWheel
                       size={120}
                       width={25}
-                      progress={80}
+                      progress={((this.state.reservas.Voltage)-31)*10}
                       animateFromValue={0}
                       duration={5000}
                       color={'red'}
@@ -212,7 +226,7 @@ export default class Main extends React.Component {
       )
     }
     //-----------------------------------------------------------------------------------------------
-    if(this.state.isItOn == true && this.state.powerLevel > 31){
+    if(this.state.isItOn == true && this.state.reservas.Voltage > 31){
       return(
         <Container>
           <View >
@@ -242,7 +256,7 @@ export default class Main extends React.Component {
                   <AnimatedProgressWheel
                     size={120}
                     width={25}
-                    progress={this.state.powerLevel}
+                    progress={this.state.reservas.Voltage}
                     animateFromValue={0}
                     duration={5000}
                     color={'#daa520'}
@@ -254,7 +268,7 @@ export default class Main extends React.Component {
                     <AnimatedProgressWheel
                       size={120}
                       width={25}
-                      progress={80}
+                      progress={((this.state.reservas.Voltage)-31)*10}
                       animateFromValue={0}
                       duration={5000}
                       color={'red'}
@@ -295,9 +309,11 @@ export default class Main extends React.Component {
     const { currentUser } = this.state;
     return (
       <Container style={{flex:1,justifyContent: 'center'}}>
+        {console.log(this.state.reservas)}
+        {console.log(this.state.reservas.Voltage)}
         {this.powerPercentage()}
         {this.RunningButton()}
-        {this.postDate()}
+        {this.postPowerStatus()}
       </Container>
         )
     }
