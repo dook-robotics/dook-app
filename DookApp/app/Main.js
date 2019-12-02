@@ -30,7 +30,6 @@ import AwesomeButton from "react-native-really-awesome-button";
 
 
 export default class Main extends React.Component {
-
   state = {
       currentUser: null,
       isItOn: null,
@@ -51,32 +50,15 @@ export default class Main extends React.Component {
   }
 
   powerButton = (temp) => {
-    var db = firebase.database();
-    var newPostKey = firebase.database().ref().child('posts').push().key;
+    firebase.database().ref('PowerButton/').on('value',(data)=>{
+      console.log(data.toJSON())
+    })
     this.setState({ isItOn: true });
-
-    var postData = {
-      power: this.state.isItOn
-    };
-    var updates = {};
-    updates['/posts/' + newPostKey] = postData;
-    firebase.database().ref().update(updates)
   }
 
   powerButton2 = (temp) => {
-    var db = firebase.database();
-    var newPostKey = firebase.database().ref().child('posts').push().key;
     this.setState({ isItOn: false });
-    //this.props.navigation.navigate('Running')
-    //this.props.navigation.navigate('Running')
-    //this.state.isItOn = true;
 
-    var postData = {
-      power: this.state.isItOn
-    };
-    var updates = {};
-    updates['/posts/' + newPostKey] = postData;
-    firebase.database().ref().update(updates)
   }
 
   postDate(){
@@ -85,9 +67,7 @@ export default class Main extends React.Component {
     var postData = {
       power: this.state.isItOn
     };
-    var updates = {};
-    updates['/posts/' + newPostKey] = postData;
-    firebase.database().ref().update(updates)
+    firebase.database().ref('/PowerButton/Machine/').update(postData)
   }
 
   powerPercentage(){
@@ -103,10 +83,10 @@ export default class Main extends React.Component {
         <Container>
           <View >
             <Header style = {styles.colorz}>
-              <Body style={{marginLeft:"35%"}}>
+              <Body style={{marginLeft:"5%"}}>
                 <Image
-                  style={{width: 200, height: 50}}
-                  source={require('../assets/dook2.png')}
+                  style={{width: 200, height: 50, alignItems:'center'}}
+                  source={require('../assets/dookie.png')}
                 />
               </Body>
             </Header>
@@ -114,10 +94,29 @@ export default class Main extends React.Component {
           <View>
             <Body style={{marginLeft:"35%"}}>
               <Image
-                style={{width: 200, height: 400,alignItems: 'center' }}
+                style={{width: 200, height: 400,alignItems: 'center', marginRight:'50%',marginTop:'30%' }}
                 source={require('../assets/Batteries.png')}
               />
             </Body>
+            <View>
+              <Text style={{textAlign: 'center',color:'black', marginTop:'130%'}}>Battery is low</Text>
+              <Text style={{textAlign: 'center',color:'black', marginTop:'3%'}}>Please charge now</Text>
+            </View>
+            <View style={{marginTop:'34%'}}>
+            <Footer>
+              <FooterTab>
+                <Button onPress={() => this.props.navigation.navigate('Settings')}>
+                  <Text>Settings</Text>
+                </Button>
+                <Button active>
+                  <Text >Home</Text>
+                </Button>
+                <Button onPress={() => this.props.navigation.navigate('Scheduler')}>
+                  <Text>Schedule</Text>
+                </Button>
+              </FooterTab>
+            </Footer>
+            </View>
           </View>
         </Container>
       )
@@ -139,16 +138,21 @@ export default class Main extends React.Component {
         <Container>
           <View >
           <Header style = {styles.colorz}>
-            <Body style={{marginLeft:"35%"}}>
+            <Body style={{marginLeft:"5%"}}>
               <Image
-                style={{width: 200, height: 50}}
-                source={require('../assets/dook2.png')}
+                style={{width: 200, height: 50, alignItems:'center'}}
+                source={require('../assets/dookie.png')}
               />
             </Body>
           </Header>
+          <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:20 }}>Ready to clean</Text>
+          <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press clean to start</Text>
           <View style = {styles.container}>
             <TouchableOpacity style ={styles.myButton} onPress = {() => this.setState({ isItOn: true })}>
-              <Text> Start </Text>
+              <Image
+                style={{marginTop:'25%',width:400, height: 200,  resizeMode: 'stretch', marginRight:'80%'}}
+                source={require('../assets/clean.png')}
+              />
             </TouchableOpacity>
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
@@ -182,7 +186,13 @@ export default class Main extends React.Component {
             </View>
           </View>
           </View>
-          <View style={{marginTop:"40%"}}>
+          <View>
+            <Image
+            style={{width: 500, height: 150, alignItems:'center',resizeMode:'stretch',opacity: 0.2}}
+            source={require('../assets/landscape.png')}
+            />
+          </View>
+          <View >
           <Footer>
             <FooterTab>
               <Button onPress={() => this.props.navigation.navigate('Settings')}>
@@ -203,32 +213,23 @@ export default class Main extends React.Component {
     //-----------------------------------------------------------------------------------------------
     if(this.state.isItOn == true && this.state.powerLevel > 31){
       return(
-      <Container >
-          {/*<Button onPress={() => this.setState({ isItOn: false })}>
-            <Text>Stop Dook</Text>
-          </Button>*/}
-
+        <Container>
           <View >
           <Header style = {styles.colorz}>
-            <Body style={{marginLeft:"35%"}}>
+            <Body style={{marginLeft:"5%"}}>
               <Image
-                style={{width: 200, height: 50}}
-                source={require('../assets/dook2.png')}
+                style={{width: 200, height: 50, alignItems:'center'}}
+                source={require('../assets/dookie.png')}
               />
             </Body>
           </Header>
+          <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:20 }}>Now running for 30 minutes</Text>
+          <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press button to force stop</Text>
           <View style = {styles.container}>
-            <TouchableOpacity style={{backgroundColor:'white'}} onPress = {() => this.setState({ isItOn: false })}>
-            <Text>Running</Text>
-            <AnimatedProgressWheel
-              size={300}
-              width={25}
-              animateFromValue={0}
-              duration={6000}
-              progress={100}
-              duration={5000}
-              fullColor={'green'}
-              backgroundColor={'white'}
+            <TouchableOpacity style ={styles.myButton3} onPress = {() => this.setState({ isItOn: false })}>
+              <Image
+                style={{marginTop:'25%',width:400, height: 200,  resizeMode: 'stretch', marginRight:'80%'}}
+                source={require('../assets/clean.png')}
               />
             </TouchableOpacity>
             <View style = {styles.container}>
@@ -263,7 +264,13 @@ export default class Main extends React.Component {
             </View>
           </View>
           </View>
-          <View style={{marginTop:"40%"}}>
+          <View>
+            <Image
+            style={{width: 500, height: 150, alignItems:'center',resizeMode:'stretch',opacity: 0.2}}
+            source={require('../assets/landscape.png')}
+            />
+          </View>
+          <View >
           <Footer>
             <FooterTab>
               <Button onPress={() => this.props.navigation.navigate('Settings')}>
@@ -278,14 +285,13 @@ export default class Main extends React.Component {
             </FooterTab>
           </Footer>
           </View>
-      </Container>
+        </Container>
       )
     }
   }
 
   render() {
     const { currentUser } = this.state;
-
     return (
       <Container style={{flex:1,justifyContent: 'center'}}>
         {this.powerPercentage()}
@@ -300,7 +306,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50
+    marginTop: 30
   },
   container2: {
     justifyContent: 'center',
@@ -310,7 +316,8 @@ const styles = StyleSheet.create({
   },
   colorz: {
     backgroundColor:'green',
-    textAlign:'center'
+    textAlign:'center',
+    height: 75
   },
   headerWord: {
     textAlign: 'center'
@@ -330,5 +337,13 @@ const styles = StyleSheet.create({
     borderRadius:600, //Then Make the Border Radius twice the size of width or Height
     backgroundColor:'white',
 
-  }
+  },
+  myButton3:{
+    padding: 5,
+    height: 300,
+    width: 300,  //The Width must be the same as the height
+    borderRadius:600, //Then Make the Border Radius twice the size of width or Height
+    backgroundColor:'red'
+
+  },
 })
