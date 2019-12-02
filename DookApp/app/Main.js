@@ -18,7 +18,7 @@ PURPOSE:
 // Main.js
 import React, {Component} from 'react'
 import { StyleSheet, Platform, Image, View,TouchableOpacity, TextInput, Alert,TouchableWithoutFeedback, Animated, Easing } from 'react-native'
-import { Container, Header, Content, Button, Icon,Text, Body, Title, Right, Left,Tabs , Footer, FooterTab, ListItem, Spinner} from 'native-base';
+import { Container, Header, Content, Button, Icon,Text, Body, Title, Right, Left,Tabs , Footer, FooterTab, ListItem} from 'native-base';
 import * as firebase from 'firebase';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
@@ -35,8 +35,9 @@ export default class Main extends React.Component {
       this.state = {
           reservas: [],
           currentUser: null,
-          isItOn: null,
-          powerLevel: 32
+          isItOn: '',
+          weight: 0,
+          time:'',
       }
   }
 
@@ -56,6 +57,13 @@ export default class Main extends React.Component {
         this.setState({reservas:state}) })
   }
   readDookData();
+//  var hours = new Date().getHours(); //Current Hours
+//  var min = new Date().getMinutes(); //Current Minutes
+//  this.setState({
+    //Setting the value of the date time
+//    time:
+//      hours + ':' + min,
+  //});
   }
 
 
@@ -71,6 +79,7 @@ export default class Main extends React.Component {
       console.log(data.toJSON())
     })
     this.setState({ isItOn: true });
+
   }
 
   powerButton2 = (temp) => {
@@ -140,12 +149,6 @@ export default class Main extends React.Component {
   }
 
   RunningButton(){
-//    var db = firebase.database();
-//    var ref = db.ref("voltage");
-//    ref.orderByChild("height").on("child_added", function(snapshot) {
-//      console.log(snapshot.key + " was " + snapshot.val().height + " meters tall");
-//    });
-
     //-----------------------------------------------------------------------------------------------
     if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 31){
       return(
@@ -178,7 +181,7 @@ export default class Main extends React.Component {
                   <AnimatedProgressWheel
                     size={120}
                     width={25}
-                    progress={((this.state.reservas.Voltage)-31)*10}
+                    progress={this.state.loadCell}
                     animateFromValue={0}
                     duration={5000}
                     color={'#daa520'}
@@ -311,6 +314,7 @@ export default class Main extends React.Component {
       <Container style={{flex:1,justifyContent: 'center'}}>
         {console.log(this.state.reservas)}
         {console.log(this.state.reservas.Voltage)}
+        {console.log(this.state.weight)}
         {this.powerPercentage()}
         {this.RunningButton()}
         {this.postPowerStatus()}

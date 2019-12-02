@@ -27,22 +27,11 @@ import {Helmet} from "react-helmet";
 import ProgressiveImage from 'react-progressive-image';
 
 export default class Scheduler extends React.Component {
-  constructor() {
-      super()
-      this.state = {
-          reservas: []
-      }
-  }
 
-    componentDidMount() {
-      const readDookData = ()=> {
-        const piRef =  firebase.database().ref('Pi')
-        piRef.on('value', (snapshot)=> {
-          const state = snapshot.val()
-          this.setState({reservas:state}) })
-    }
-    readDookData();
-    }
+
+  componentDidMount() {
+
+  }
 
 
 
@@ -51,8 +40,6 @@ export default class Scheduler extends React.Component {
 
     return (
             <Container>
-            {console.log(this.state.reservas)}
-
               <View>
                 <Header style = {styles.colorz}>
                   <Body style={{marginLeft:"5%"}}>

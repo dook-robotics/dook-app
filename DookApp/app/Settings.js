@@ -49,14 +49,14 @@ export default class Settings extends React.Component {
     return (
             <Container>
               <View>
-                <Header style = {styles.colorz}>
-                  <Body style={{marginLeft:"35%"}}>
-                    <Image
-                      style={{width: 200, height: 50}}
-                      source={require('../assets/dook2.png')}
-                    />
-                  </Body>
-                </Header>
+              <Header style = {styles.colorz}>
+                <Body style={{marginLeft:"5%"}}>
+                  <Image
+                    style={{width: 200, height: 50, alignItems:'center'}}
+                    source={require('../assets/dookie.png')}
+                  />
+                </Body>
+              </Header>
                 <Button light hasText  onPress={() => this.signOutUser()}>
                   <Text>Sign Out</Text>
                 </Button>
@@ -68,7 +68,7 @@ export default class Settings extends React.Component {
                     <Button  onPress={() => this.props.navigation.navigate('Main')}>
                       <Text >Home</Text>
                     </Button>
-                    <Button>
+                    <Button onPress={() => this.props.navigation.navigate('Scheduler')}>
                       <Text>Schedule</Text>
                     </Button>
                   </FooterTab>
@@ -83,11 +83,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50
+    marginTop: 30
   },
   colorz: {
     backgroundColor:'green',
-    textAlign:'center'
+    textAlign:'center',
+    height:75
   },
   headerWord: {
     textAlign: 'center'
