@@ -25,7 +25,7 @@ import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import {Helmet} from "react-helmet";
 import ProgressiveImage from 'react-progressive-image';
-import AwesomeButton from "react-native-really-awesome-button";
+//import AwesomeButton from "react-native-really-awesome-button";
 
 
 
@@ -148,12 +148,13 @@ export default class Main extends React.Component {
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:20 }}>Ready to clean</Text>
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press clean to start</Text>
           <View style = {styles.container}>
-            <TouchableOpacity style ={styles.myButton} onPress = {() => this.setState({ isItOn: true })}>
-              <Image
-                style={{marginTop:'25%',width:400, height: 200,  resizeMode: 'stretch', marginRight:'80%'}}
-                source={require('../assets/clean.png')}
-              />
+            <TouchableOpacity style ={styles.myButton} source={require('../assets/clean.png')} onPress = {() => this.setState({ isItOn: true })}>
+            <Image
+              style={{width:400, height: 200,  resizeMode: 'stretch'}}
+              source={require('../assets/clean.png')}
+            />
             </TouchableOpacity>
+
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
               </View>
@@ -227,11 +228,11 @@ export default class Main extends React.Component {
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press button to force stop</Text>
           <View style = {styles.container}>
             <TouchableOpacity style ={styles.myButton3} onPress = {() => this.setState({ isItOn: false })}>
-              <Image
-                style={{marginTop:'25%',width:400, height: 200,  resizeMode: 'stretch', marginRight:'80%'}}
-                source={require('../assets/clean.png')}
-              />
             </TouchableOpacity>
+            <Image
+              style={styles.Clean}
+              source={require('../assets/clean.png')}
+            />
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
               </View>
@@ -327,7 +328,8 @@ const styles = StyleSheet.create({
     height: 300,
     width: 300,  //The Width must be the same as the height
     borderRadius:600, //Then Make the Border Radius twice the size of width or Height
-    backgroundColor:'green'
+    backgroundColor:'green',
+    justifyContent:'center'
 
   },
   myButton2:{
@@ -346,4 +348,12 @@ const styles = StyleSheet.create({
     backgroundColor:'red'
 
   },
+  Clean:{
+    width:350,
+    height: 200,
+    resizeMode: 'stretch',
+    position: 'absolute',
+    alignContent: 'center',
+    justifyContent:'center'
+  }
 })
