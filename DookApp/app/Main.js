@@ -307,7 +307,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30
+    marginTop: 30,
+    position:'relative'
+
   },
   container2: {
     justifyContent: 'center',
@@ -329,7 +331,8 @@ const styles = StyleSheet.create({
     width: 300,  //The Width must be the same as the height
     borderRadius:600, //Then Make the Border Radius twice the size of width or Height
     backgroundColor:'green',
-    justifyContent:'center'
+    justifyContent:'center',
+    alignItems:'center'
 
   },
   myButton2:{
@@ -351,9 +354,12 @@ const styles = StyleSheet.create({
   Clean:{
     width:350,
     height: 200,
-    resizeMode: 'stretch',
     position: 'absolute',
-    alignContent: 'center',
-    justifyContent:'center'
+    resizeMode:'center',
+    justifyContent:'center',
+    top:0,
+    left:0
+
+
   }
 })
