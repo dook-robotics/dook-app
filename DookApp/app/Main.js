@@ -27,7 +27,7 @@ import {Helmet} from "react-helmet";
 import ProgressiveImage from 'react-progressive-image';
 //import AwesomeButton from "react-native-really-awesome-button";
 
-
+const flag = false;
 
 export default class Main extends React.Component {
   constructor() {
@@ -35,7 +35,7 @@ export default class Main extends React.Component {
       this.state = {
           reservas: [],
           currentUser: null,
-          isItOn: '',
+          isItOn: 0,
           weight: 0,
           time:'',
       }
@@ -57,6 +57,12 @@ export default class Main extends React.Component {
         this.setState({reservas:state}) })
   }
   readDookData();
+  if(flag == true){
+    var postData = {
+      Power: true
+    };
+    firebase.database().ref('/Pi/').update(postData)
+  }
 //  var hours = new Date().getHours(); //Current Hours
 //  var min = new Date().getMinutes(); //Current Minutes
 //  this.setState({
@@ -75,15 +81,27 @@ export default class Main extends React.Component {
   }
 
   powerButton = (temp) => {
-    firebase.database().ref('PowerButton/').on('value',(data)=>{
+    firebase.database().ref('/Pi/Power/').on('value',(data)=>{
       console.log(data.toJSON())
     })
-    this.setState({ isItOn: true });
-
+    this.setState({ isItOn: 1 });
+    flag = true;
+    var postData = {
+      Power: true
+    };
+    firebase.database().ref('/Pi/').update(postData)
   }
 
   powerButton2 = (temp) => {
-    this.setState({ isItOn: false });
+    firebase.database().ref('/Pi/Power/').on('value',(data)=>{
+      console.log(data.toJSON())
+    })
+    flag = false;
+    this.setState({ isItOn: 0 });
+    var postData = {
+      Power: false
+    };
+    firebase.database().ref('/Pi/').update(postData)
 
   }
 
@@ -102,7 +120,7 @@ export default class Main extends React.Component {
     //Don't let user run if less than 31.... So check if less than 31
     //GotVoltage - 31
     //this.setState({powerLevel:30});
-    if(this.state.reservas.Voltage <= 31){
+    if(this.state.reservas.Voltage <= 32){
       return(
         <Container>
           <View >
@@ -149,8 +167,16 @@ export default class Main extends React.Component {
   }
 
   RunningButton(){
+    if(this.state.reservas == {}){
+      return(
+        <Container>
+          <Text>No connection to internet</Text>
+        </Container>
+      )
+    }
     //-----------------------------------------------------------------------------------------------
-    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 31){
+    // && this.state.reservas.Power == false might be needed
+    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 32){
       return(
         <Container>
           <View >
@@ -166,8 +192,7 @@ export default class Main extends React.Component {
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press clean to start</Text>
           <View style = {styles.container}>
           <View>
-            <TouchableOpacity style ={styles.myButton} source={require('../assets/clean.png')} onPress = {() => this.setState({ isItOn: true })}>
-            </TouchableOpacity>
+            <TouchableOpacity style ={styles.myButton} source={require('../assets/clean.png')} onPress = {() => this.setState({ isItOn: 1 })}/>
             <Image
               style={styles.Clean}
               source={require('../assets/clean.png')}/>
@@ -181,7 +206,7 @@ export default class Main extends React.Component {
                   <AnimatedProgressWheel
                     size={120}
                     width={25}
-                    progress={this.state.loadCell}
+                    progress={((this.state.reservas.loadCell) * 100)/70}
                     animateFromValue={0}
                     duration={5000}
                     color={'#daa520'}
@@ -231,7 +256,19 @@ export default class Main extends React.Component {
       )
     }
     //-----------------------------------------------------------------------------------------------
-    if(this.state.isItOn == true && this.state.reservas.Voltage > 31){
+    // if Pi still is not on and button is pressed
+//    if (this.state.isItOn == true && this.state.reservas.Power == false){
+      //Show a "Dook is powering on page"
+//      return(
+//        <Container style ={{backgroundColor:'green'}}>
+//          <Text> Dook is powering on</Text>
+//        </Container>
+//      )
+//    }
+
+    //&& this.state.reservas.Power == true  would also be needed
+    //-----------------------------------------------------------------------------------------------
+    if(this.state.isItOn == true && this.state.reservas.Voltage > 32){
       return(
         <Container>
           <View >
@@ -247,7 +284,7 @@ export default class Main extends React.Component {
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press button to force stop</Text>
           <View style = {styles.container}>
             <View>
-            <TouchableOpacity style ={styles.myButton3} onPress = {() => this.setState({ isItOn: false })}>
+            <TouchableOpacity style ={styles.myButton3} onPress = {() => this.setState({ isItOn: 0 })}>
             </TouchableOpacity>
             <Image
               style={styles.Clean}
@@ -263,7 +300,7 @@ export default class Main extends React.Component {
                   <AnimatedProgressWheel
                     size={120}
                     width={25}
-                    progress={this.state.reservas.Voltage}
+                    progress={((this.state.reservas.loadCell) * 100)/70}
                     animateFromValue={0}
                     duration={5000}
                     color={'#daa520'}
