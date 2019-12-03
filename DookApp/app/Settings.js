@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 50
+    marginTop: 30
   },
   colorz: {
     backgroundColor:'green',
