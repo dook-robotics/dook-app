@@ -167,7 +167,8 @@ export default class Main extends React.Component {
             </TouchableOpacity>
             <Image
               style={styles.Clean}
-              source={require('../assets/clean.png')}/>
+              source={require('../assets/clean.png')}
+            />
            </View>
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
