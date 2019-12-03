@@ -195,7 +195,8 @@ export default class Main extends React.Component {
             <TouchableOpacity style ={styles.myButton} source={require('../assets/clean.png')} onPress = {() => this.setState({ isItOn: 1 })}/>
             <Image
               style={styles.Clean}
-              source={require('../assets/clean.png')}/>
+              source={require('../assets/clean.png')}
+            />
            </View>
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
