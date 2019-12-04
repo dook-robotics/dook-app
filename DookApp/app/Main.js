@@ -80,6 +80,14 @@ export default class Main extends React.Component {
     });
   }
 
+  loadCellReset(){
+    var postData = {
+      loadCell: -1
+    };
+    firebase.database().ref('/Pi/').update(postData)
+
+  }
+
   powerButton = (temp) => {
     firebase.database().ref('/Pi/Power/').on('value',(data)=>{
       console.log(data.toJSON())
@@ -153,8 +161,51 @@ export default class Main extends React.Component {
                 <Button active>
                   <Text >Home</Text>
                 </Button>
-                <Button onPress={() => this.props.navigation.navigate('Scheduler')}>
-                  <Text>Schedule</Text>
+              </FooterTab>
+            </Footer>
+            </View>
+          </View>
+        </Container>
+      )
+    }
+  }
+
+
+  itIsFullHomie(){
+    //((this.state.reservas.loadCell) * 100)/70 < 100
+    if(((this.state.reservas.loadCell) * 100)/70 >= 100){
+      return(
+        <Container>
+          <View >
+            <Header style = {styles.colorz}>
+              <Body style={{marginLeft:"5%"}}>
+                <Image
+                  style={{width: 200, height: 50, alignItems:'center'}}
+                  source={require('../assets/dookie.png')}
+                />
+              </Body>
+            </Header>
+          </View>
+          <View>
+            <Body style={{marginLeft:"35%"}}>
+              <Image
+                style={{width: 320, height: 400,alignItems: 'center', marginRight:'50%',marginTop:'30%',resizeMode:'stretch' }}
+                source={require('../assets/waste.jpg')}
+              />
+            </Body>
+            <View>
+              <Text style={{textAlign: 'center',color:'black', marginTop:'130%'}}>Dook is full</Text>
+              <Text style={{textAlign: 'center',color:'black', marginTop:'3%'}}>Please empty out now</Text>
+              <Button  onPress={() => this.loadCellReset()} ><Text style={{textAlign: 'center', marginLeft:'24%'}}>Press Me When Emptied</Text></Button>
+            </View>
+            <View style={{marginTop:'34%'}}>
+            <Footer>
+              <FooterTab>
+                <Button onPress={() => this.props.navigation.navigate('Settings')}>
+                  <Text>Settings</Text>
+                </Button>
+                <Button active>
+                  <Text >Home</Text>
                 </Button>
               </FooterTab>
             </Footer>
@@ -163,8 +214,10 @@ export default class Main extends React.Component {
         </Container>
       )
     }
-
   }
+
+
+
 
   RunningButton(){
     if(this.state.reservas == {}){
@@ -176,7 +229,7 @@ export default class Main extends React.Component {
     }
     //-----------------------------------------------------------------------------------------------
     // && this.state.reservas.Power == false might be needed
-    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 34){
+    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 34 && ((this.state.reservas.loadCell) * 100)/70 < 100 ){
       return(
         <Container>
           <View >
@@ -269,7 +322,7 @@ export default class Main extends React.Component {
 
     //&& this.state.reservas.Power == true  would also be needed
     //-----------------------------------------------------------------------------------------------
-    if(this.state.isItOn == true && this.state.reservas.Voltage > 34){
+    if(this.state.isItOn == true && this.state.reservas.Voltage > 34 && ((this.state.reservas.loadCell) * 100)/70 < 100){
       return(
         <Container>
           <View >
@@ -355,6 +408,7 @@ export default class Main extends React.Component {
         {console.log(this.state.reservas.Voltage)}
         {console.log(this.state.weight)}
         {this.powerPercentage()}
+        {this.itIsFullHomie()}
         {this.RunningButton()}
         {this.postPowerStatus()}
       </Container>
