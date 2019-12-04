@@ -44,7 +44,7 @@ export default class Main extends React.Component {
 //  state = {
   //    currentUser: null,
 //      isItOn: null,
-  //    powerLevel: 32
+  //    powerLevel: 34
     //}
 
   componentDidMount() {
@@ -120,7 +120,7 @@ export default class Main extends React.Component {
     //Don't let user run if less than 31.... So check if less than 31
     //GotVoltage - 31
     //this.setState({powerLevel:30});
-    if(this.state.reservas.Voltage <= 32){
+    if(this.state.reservas.Voltage <= 34){
       return(
         <Container>
           <View >
@@ -176,7 +176,7 @@ export default class Main extends React.Component {
     }
     //-----------------------------------------------------------------------------------------------
     // && this.state.reservas.Power == false might be needed
-    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 32){
+    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 34){
       return(
         <Container>
           <View >
@@ -192,10 +192,10 @@ export default class Main extends React.Component {
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press clean to start</Text>
           <View style = {styles.container}>
           <View>
-            <TouchableOpacity style ={styles.myButton} source={require('../assets/clean.png')} onPress = {() => this.setState({ isItOn: 1 })}/>
+            <TouchableOpacity style ={styles.myButton}  onPress = {() => this.setState({ isItOn: 1 })}/>
             <Image
               style={styles.Clean}
-              source={require('../assets/clean.png')}
+              source={require('../assets/clean2.png')}
             />
            </View>
             <View style = {styles.container}>
@@ -269,7 +269,7 @@ export default class Main extends React.Component {
 
     //&& this.state.reservas.Power == true  would also be needed
     //-----------------------------------------------------------------------------------------------
-    if(this.state.isItOn == true && this.state.reservas.Voltage > 32){
+    if(this.state.isItOn == true && this.state.reservas.Voltage > 34){
       return(
         <Container>
           <View >
@@ -289,7 +289,7 @@ export default class Main extends React.Component {
             </TouchableOpacity>
             <Image
               style={styles.Clean}
-              source={require('../assets/clean.png')}
+              source={require('../assets/Stop.png')}
             />
             </View>
             <View style = {styles.container}>
@@ -417,8 +417,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     justifyContent:'center',
     alignItems:'center',
-    resizeMode: 'center'
-
+    resizeMode: 'center',
 
   }
 })
