@@ -27,7 +27,7 @@ import {Helmet} from "react-helmet";
 import ProgressiveImage from 'react-progressive-image';
 //import AwesomeButton from "react-native-really-awesome-button";
 
-const flag = false;
+var flag=false;
 
 export default class Main extends React.Component {
   constructor() {
@@ -40,6 +40,7 @@ export default class Main extends React.Component {
           time:'',
       }
   }
+
 
 //  state = {
   //    currentUser: null,
@@ -81,6 +82,8 @@ export default class Main extends React.Component {
   }
 
   loadCellReset(){
+    this.setState({isItOn:0})
+
     var postData = {
       loadCell: -1
     };
@@ -114,6 +117,9 @@ export default class Main extends React.Component {
   }
 
   postPowerStatus(){
+    if(flag == true){
+      flag = false
+    }
     var postData = {
       power: this.state.isItOn
     };
@@ -172,8 +178,9 @@ export default class Main extends React.Component {
 
 
   itIsFullHomie(){
-    //((this.state.reservas.loadCell) * 100)/70 < 100
-    if(((this.state.reservas.loadCell) * 100)/70 >= 100){
+    //((this.state.reservas.loadCell) * 100)/300 < 100
+    if(((this.state.reservas.loadCell) * 100)/300 >= 100){
+      flag = true;
       return(
         <Container>
           <View >
@@ -227,9 +234,14 @@ export default class Main extends React.Component {
         </Container>
       )
     }
+    if (this.state.reservas.loadCell == -1 || this.state.reservas.loadCell == 0 ) {
+      percent = <Text style={{ marginTop:'5%',fontSize: 20, color: 'black'}}>Dook is currently empty</Text>;
+    } else {
+      percent = <Text style={{ marginTop:'5%',fontSize: 20, color: 'black'}}>{parseInt(((this.state.reservas.loadCell) * 100)/300,10)}% full</Text>;
+    }
     //-----------------------------------------------------------------------------------------------
     // && this.state.reservas.Power == false might be needed
-    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 34 && ((this.state.reservas.loadCell) * 100)/70 < 100 ){
+    if((this.state.isItOn == false || this.state.isItOn == null) && this.state.reservas.Voltage > 34 && ((this.state.reservas.loadCell) * 100)/300 < 100 ){
       return(
         <Container>
           <View >
@@ -260,12 +272,13 @@ export default class Main extends React.Component {
                   <AnimatedProgressWheel
                     size={120}
                     width={25}
-                    progress={((this.state.reservas.loadCell) * 100)/70}
+                    progress={((this.state.reservas.loadCell) * 100)/300}
                     animateFromValue={0}
                     duration={5000}
                     color={'#daa520'}
                     fullColor={'#8b4513'}
                     />
+                    {/*<Text style={{ fontSize: 25, color: 'black'}}>{parseInt(((this.state.reservas.loadCell) * 100)/300,10)}% full</Text>*/}
                 </View>
                 <View style={{flexDirection:"col", marginLeft:"15%"}}>
                   <Text style={{fontWeight:'bold',marginBottom:"20%",textAlign:"center"}}>Battery</Text>
@@ -280,6 +293,8 @@ export default class Main extends React.Component {
                       />
                 </View>
               </View>
+              <Text style={{ marginTop:'5%',fontSize: 20, color: 'black'}}>{parseInt(((this.state.reservas.Voltage)-31)*10,10)}% battery life remaining</Text>
+              {percent}
             </View>
           </View>
           </View>
@@ -322,7 +337,7 @@ export default class Main extends React.Component {
 
     //&& this.state.reservas.Power == true  would also be needed
     //-----------------------------------------------------------------------------------------------
-    if(this.state.isItOn == true && this.state.reservas.Voltage > 34 && ((this.state.reservas.loadCell) * 100)/70 < 100){
+    if(this.state.isItOn == true && this.state.reservas.Voltage > 34 && ((this.state.reservas.loadCell) * 100)/300 < 100){
       return(
         <Container>
           <View >
@@ -354,7 +369,7 @@ export default class Main extends React.Component {
                   <AnimatedProgressWheel
                     size={120}
                     width={25}
-                    progress={((this.state.reservas.loadCell) * 100)/70}
+                    progress={((this.state.reservas.loadCell) * 100)/300}
                     animateFromValue={0}
                     duration={5000}
                     color={'#daa520'}
@@ -374,6 +389,8 @@ export default class Main extends React.Component {
                       />
                 </View>
               </View>
+              <Text style={{ marginTop:'5%',fontSize: 20, color: 'black'}}>{parseInt(((this.state.reservas.Voltage)-31)*10,10)}% battery life remaining</Text>
+              {percent}
             </View>
           </View>
           </View>
