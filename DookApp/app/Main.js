@@ -257,11 +257,13 @@ export default class Main extends React.Component {
           <Text style={{textAlign: 'center',color:'#a39f9e', marginTop:2 }}>Press clean to start</Text>
           <View style = {styles.container}>
           <View>
-            <TouchableOpacity style ={styles.myButton}  onPress = {() => this.setState({ isItOn: 1 })}/>
+            <TouchableOpacity style ={styles.myButton}  onPress = {() => this.setState({ isItOn: 1 })}>
             <Image
               style={styles.Clean}
               source={require('../assets/clean2.png')}
             />
+            </TouchableOpacity>
+
            </View>
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
@@ -354,11 +356,11 @@ export default class Main extends React.Component {
           <View style = {styles.container}>
             <View>
             <TouchableOpacity style ={styles.myButton3} onPress = {() => this.setState({ isItOn: 0 })}>
-            </TouchableOpacity>
             <Image
-              style={styles.Clean}
+              style={styles.Clean2}
               source={require('../assets/Stop.png')}
             />
+            </TouchableOpacity>
             </View>
             <View style = {styles.container}>
               <View style={{flexDirection:"row"}}>
@@ -483,6 +485,16 @@ const styles = StyleSheet.create({
   },
   Clean:{
     width: 350,
+    height: 200,
+    marginTop: '18%',
+    position: 'absolute',
+    justifyContent:'center',
+    alignItems:'center',
+    resizeMode: 'center',
+
+  },
+  Clean2:{
+    width: 320,
     height: 200,
     marginTop: '18%',
     position: 'absolute',
